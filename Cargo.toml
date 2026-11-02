@@ -1,0 +1,38 @@
+[package]
+name = "pi_hesaplayici"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = ["gui"]
+# To build without the desktop GUI: cargo build --no-default-features
+gui = ["dep:eframe", "dep:egui"]
+
+[dependencies]
+# crossterm: terminal raw mode, alternate screen, key events, and styling
+crossterm = "0.27"
+
+# serde + serde_json: JSON serialization for record and lock files
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# eframe + egui: desktop graphical user interface
+eframe = { version = "0.27", optional = true }
+egui = { version = "0.27", optional = true }
+
+# rug: GMP big integers (hex-to-decimal conversion) and MPFR directed-rounding interval arithmetic
+rug = "1.26"
+sha2 = "0.10"
+fs2 = "0.4"
+thiserror = "2"
+
+[profile.release]
+# Maximum optimization for compute-intensive modular exponentiation and MPFR arithmetic
+opt-level = 3
+lto = true
+
+[dev-dependencies]
+tempfile = "3.27.0"
+
+[target."cfg(unix)".dependencies]
+signal-hook = "0.3"
